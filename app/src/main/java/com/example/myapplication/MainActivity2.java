@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,13 +24,26 @@ public class MainActivity2 extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Bundle bundle = getIntent().getExtras();
-        EditText editText=findViewById(R.id.edit2);
-        editText.setText(getIntent().getExtras().get("key2").toString());
-        Log.i("Monia MainActivity2",getIntent().getExtras().get("key1").toString());
+
+        // Отримуємо дані з Intent
+        double v1 = getIntent().getDoubleExtra("v1", 0.0);
+        double t1 = getIntent().getDoubleExtra("t1", 0.0);
+        double v2 = getIntent().getDoubleExtra("v2", 0.0);
+        double t2 = getIntent().getDoubleExtra("t2", 0.0);
+
+        // Обчислюємо результат
+        double totalVolume = v1 + v2;
+        double totalTemperature = (v1 * t1 + v2 * t2) / (v1 + v2);
+
+        // Відображаємо результат
+        TextView resultText = findViewById(R.id.result_text);
+        String result = String.format("Об'єм суміші: %.2f л\nТемпература суміші: %.2f °C", totalVolume, totalTemperature);
+        resultText.setText(result);
+
+        // Кнопка для повернення
         Button button2 = findViewById(R.id.button2);
         button2.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity2.this,MainActivity.class);
+            Intent intent = new Intent(MainActivity2.this, MainActivity.class);
             startActivity(intent);
         });
     }

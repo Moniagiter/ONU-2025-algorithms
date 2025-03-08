@@ -24,40 +24,68 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         Button button1 = findViewById(R.id.button1);
         button1.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,MainActivity2.class);
-            intent.putExtra("key1","Hello");
-            EditText edit1=findViewById(R.id.edit1);
-            intent.putExtra("key2",edit1.getText());
+            EditText v1Input = findViewById(R.id.v1_input);
+            EditText t1Input = findViewById(R.id.t1_input);
+            EditText v2Input = findViewById(R.id.v2_input);
+            EditText t2Input = findViewById(R.id.t2_input);
+
+            // Отримуємо значення або 0, якщо введено некоректно
+            double v1 = parseDoubleOrDefault(v1Input.getText().toString(), 0.0);
+            double t1 = parseDoubleOrDefault(t1Input.getText().toString(), 0.0);
+            double v2 = parseDoubleOrDefault(v2Input.getText().toString(), 0.0);
+            double t2 = parseDoubleOrDefault(t2Input.getText().toString(), 0.0);
+
+            Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+            intent.putExtra("v1", v1);
+            intent.putExtra("t1", t1);
+            intent.putExtra("v2", v2);
+            intent.putExtra("t2", t2);
             startActivity(intent);
         });
     }
+
+    // Допоміжна функція для безпечного парсингу double
+    private double parseDoubleOrDefault(String value, double defaultValue) {
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
     @Override
     protected void onPause() {
         Log.i("Monia 1", "Pause");
         super.onPause();
     }
+
     @Override
     protected void onDestroy() {
         Log.i("Monia 1", "Destroy");
         super.onDestroy();
     }
+
     @Override
     protected void onRestart() {
         Log.i("Monia 1", "Restart");
         super.onRestart();
     }
+
     @Override
     protected void onStart() {
         Log.i("Monia 1", "Start");
         super.onStart();
     }
+
     @Override
     protected void onStop() {
         Log.i("Monia 1", "Stop");
         super.onStop();
     }
+
     @Override
     protected void onResume() {
         Log.i("Monia 1", "Resume");

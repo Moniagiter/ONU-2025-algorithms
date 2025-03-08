@@ -10,19 +10,43 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Введіть параметри води"
+        android:textSize="20sp" />
+
     <EditText
+        android:id="@+id/v1_input"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/edit1">
-    </EditText>
+        android:hint="Об'єм 1 (л)"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/t1_input"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Температура 1 (°C)"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/v2_input"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Об'єм 2 (л)"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/t2_input"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Температура 2 (°C)"
+        android:inputType="numberDecimal" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button1"
-        android:text="Go to another activity">
-    </Button>
+        android:text="Обчислити" />
 </androidx.appcompat.widget.LinearLayoutCompat>
