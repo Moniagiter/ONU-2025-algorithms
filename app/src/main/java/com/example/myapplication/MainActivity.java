@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
             EditText v2Input = findViewById(R.id.v2_input);
             EditText t2Input = findViewById(R.id.t2_input);
 
-            // Отримуємо значення або 0, якщо введено некоректно
             double v1 = parseDoubleOrDefault(v1Input.getText().toString(), 0.0);
             double t1 = parseDoubleOrDefault(t1Input.getText().toString(), 0.0);
             double v2 = parseDoubleOrDefault(v2Input.getText().toString(), 0.0);
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Допоміжна функція для безпечного парсингу double
     private double parseDoubleOrDefault(String value, double defaultValue) {
         try {
             return Double.parseDouble(value);
