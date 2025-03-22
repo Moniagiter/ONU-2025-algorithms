@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
-
         FixerAPI fixerAPI = retrofit.create(FixerAPI.class);
         Call<String> call = fixerAPI.getLatestRates();
         call.enqueue(new Callback<String>() {

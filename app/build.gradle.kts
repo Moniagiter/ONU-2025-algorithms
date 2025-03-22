@@ -29,6 +29,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
+
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
