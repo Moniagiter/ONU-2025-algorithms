@@ -1,5 +1,4 @@
-package com.example.currencyexchange; // або ваш пакет
-
+package com.example.currencyexchange;
 import retrofit2.Call;
 import retrofit2.http.GET;
 public interface FixerAPI {

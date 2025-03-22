@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(TAG, "Response error: " + response.errorBody());
                 }
             }
+
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.e(TAG, "Request failed: " + t.getMessage());
