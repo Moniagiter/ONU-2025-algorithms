@@ -11,3 +11,4 @@
         android:layout_height="wrap_content"
         android:text="Currency Exchange Data will be logged" />
 </LinearLayout>
+
