@@ -9,6 +9,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import com.example.currencyexchange.FixerAPI;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "FixerDemo";
     private static final String BASE_URL = "https://data.fixer.io/";
