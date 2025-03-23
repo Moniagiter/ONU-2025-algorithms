@@ -1,4 +1,4 @@
-package com.example.currencyexchange; // або ваш пакет
+package com.example.currencyexchange;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
