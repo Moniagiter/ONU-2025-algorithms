@@ -3,7 +3,6 @@ package com.example.myapplication;
 public class Coord {
     private Double lon;
     private Double lat;
-
     public Double getLon() {
         return lon;
     }

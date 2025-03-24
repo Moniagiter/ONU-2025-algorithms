@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra( "Key", editText.getText().toString());
                 startActivity(intent);
             }
-
         });
     }
 }

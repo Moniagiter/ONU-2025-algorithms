@@ -38,7 +38,6 @@ public class Example {
     public void setBase(String base) {
         this.base = base;
     }
-
     public Main getMain() {
         return main;
     }

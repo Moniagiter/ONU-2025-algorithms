@@ -9,7 +9,6 @@ public class Main {
     private Integer humidity;
     private Integer seaLevel;
     private Integer grndLevel;
-
     public Double getTemp() {
         return temp-273;
     }

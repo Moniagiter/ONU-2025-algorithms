@@ -10,5 +10,4 @@ public class Rain {
     public void set1h(Double _1h) {
         this._1h = _1h;
     }
-
 }
