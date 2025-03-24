@@ -13,7 +13,6 @@ public class Main {
     public Double getTemp() {
         return temp-273;
     }
-
     public void setTemp(Double temp) {
         this.temp = temp;
     }

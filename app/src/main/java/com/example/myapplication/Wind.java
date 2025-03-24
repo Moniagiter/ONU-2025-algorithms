@@ -4,7 +4,6 @@ public class Wind {
 
     private Double speed;
     private Integer deg;
-
     public Double getSpeed() {
         return speed;
     }

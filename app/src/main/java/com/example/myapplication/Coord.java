@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 public class Coord {
-
     private Double lon;
     private Double lat;
 

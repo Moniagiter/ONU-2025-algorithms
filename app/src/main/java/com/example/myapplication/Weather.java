@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 public class Weather {
-
     private Integer id;
     private String main;
     private String description;
