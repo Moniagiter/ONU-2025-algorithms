@@ -39,7 +39,6 @@ public class MainActivity2 extends AppCompatActivity {
             currencyFromIntent = "USD";
         }
 
-        // Объявляем финальную переменную (либо больше не меняем currencyFromIntent)
         final String currency = currencyFromIntent;
 
         // Настраиваем Retrofit
