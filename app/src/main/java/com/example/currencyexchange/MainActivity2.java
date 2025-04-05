@@ -2,7 +2,6 @@ package com.example.currencyexchange;
 
 import android.os.Bundle;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -17,7 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity2 extends AppCompatActivity {
     private static final String BASE_URL = "https://data.fixer.io/";
-    private TextView textView; // TextView для вывода данных
+    private static final String ACCESS_KEY = "2a2e0d17281101378897cb51295eceaf";
+    private TextView textView; // для вывода результата
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,36 +25,42 @@ public class MainActivity2 extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main2);
 
-        // Применяем отступы системы к основному контейнеру
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Получаем ссылку на TextView из activity_main2.xml
         textView = findViewById(R.id.textView);
 
-        // Настраиваем Retrofit с Gson-конвертером
+        // Получаем код валюты из Intent
+        String currencyFromIntent = getIntent().getStringExtra("currency");
+        if (currencyFromIntent == null || currencyFromIntent.isEmpty()) {
+            currencyFromIntent = "USD";
+        }
+
+        // Объявляем финальную переменную (либо больше не меняем currencyFromIntent)
+        final String currency = currencyFromIntent;
+
+        // Настраиваем Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         FixerAPI fixerAPI = retrofit.create(FixerAPI.class);
-        Call<FixerResponse> call = fixerAPI.getLatestRates();
 
-        // Выполняем асинхронный запрос и обновляем UI
+        // Делаем запрос
+        Call<FixerResponse> call = fixerAPI.getLatestRates(ACCESS_KEY, currency);
         call.enqueue(new Callback<FixerResponse>() {
             @Override
             public void onResponse(Call<FixerResponse> call, Response<FixerResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     FixerResponse fixerResponse = response.body();
-                    // Формируем строку для вывода: базовая валюта, дата и курс USD
-                    String displayText = "Base: " + fixerResponse.getBase() +
-                            "\nDate: " + fixerResponse.getDate() +
-                            "\nUSD Rate: " + fixerResponse.getRates().get("USD");
-                    textView.setText(displayText);
+                    String resultText = "Базовая валюта: " + fixerResponse.getBase() +
+                            "\nДата: " + fixerResponse.getDate() +
+                            "\nКурс " + currency + ": " + fixerResponse.getRates().get(currency);
+                    textView.setText(resultText);
                 } else {
                     textView.setText("Ошибка ответа: " + response.errorBody());
                 }

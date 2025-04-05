@@ -3,14 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/textView"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextCurrency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите код валюты (например, USD)" />
+
+    <Button
+        android:id="@+id/buttonShowResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Currency Exchange Data will be logged" />
+        android:text="Получить курс" />
 </LinearLayout>
-
-
-
