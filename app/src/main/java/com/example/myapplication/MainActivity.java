@@ -29,9 +29,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MainActivity.
-                        this,MainActivity2. class );
-                intent.putExtra( "Key", editText.getText().toString());
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                intent.putExtra("Key", editText.getText().toString());
                 startActivity(intent);
             }
         });

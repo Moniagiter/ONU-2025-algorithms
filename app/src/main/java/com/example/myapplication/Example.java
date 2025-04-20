@@ -2,9 +2,9 @@ package com.example.myapplication;
 import java.util.List;
 public class Example {
     private Coord coord;
-    private List<Weather> weather;
+    private List<WeatherData> weather;
     private String base;
-    private Main main;
+    private MainData main;
     private Integer visibility;
     private Wind wind;
     private Clouds clouds;
@@ -23,11 +23,11 @@ public class Example {
         this.coord = coord;
     }
 
-    public List<Weather> getWeather() {
+    public List<WeatherData> getWeather() {
         return weather;
     }
 
-    public void setWeather(List<Weather> weather) {
+    public void setWeather(List<WeatherData> weather) {
         this.weather = weather;
     }
 
@@ -38,10 +38,10 @@ public class Example {
     public void setBase(String base) {
         this.base = base;
     }
-    public Main getMain() {
+    public MainData getMain() {
         return main;
     }
-    public void setMain(Main main) {
+    public void setMain(MainData main) {
         this.main = main;
     }
 

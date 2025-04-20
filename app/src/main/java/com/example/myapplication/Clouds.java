@@ -1,11 +1,12 @@
 package com.example.myapplication;
 
 public class Clouds {
-    private Integer all;
-    public Integer getAll() {
+    private int all;
+
+    public int getAll() {
         return all;
     }
-    public void setAll(Integer all) {
+    public void setAll(int all) {
         this.all = all;
     }
 }
