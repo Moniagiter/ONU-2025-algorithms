@@ -12,20 +12,12 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-/**
- * MainActivity — View-слой.
- * Здесь мы:
- *  1) Находим View по id (EditText, Button, TextView для статуса, RecyclerView).
- *  2) Инициализируем Repository (Controller/MVC).
- *  3) По клику на кнопку запрашиваем курсы.
- *  4) Получаем LiveData<List<Rate>> и подписываемся на него.
- *  5) Когда данные из БД обновятся, адаптер перерисует список.
- */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -36,60 +28,64 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvRates;
     private RateAdapter rateAdapter;
 
-    private Repository repository;  // Controller/MVC
+    // ViewModel-инстанс
+    private RateViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 1) Устанавливаем layout
         setContentView(R.layout.activity_main);
 
-        // 4.1) Находим View по id
+        // 2) Находим View-поля
         etSymbols = findViewById(R.id.etSymbols);
         btnFetch  = findViewById(R.id.btnFetch);
         tvStatus  = findViewById(R.id.tvStatus);
         rvRates   = findViewById(R.id.rvRates);
 
-        // 4.2) Настраиваем RecyclerView (по умолчанию скрыт)
+        // 3) Настраиваем RecyclerView (менеджер + пустой адаптер)
         rvRates.setLayoutManager(new LinearLayoutManager(this));
         rateAdapter = new RateAdapter(new java.util.ArrayList<>());
         rvRates.setAdapter(rateAdapter);
-        rvRates.setVisibility(View.GONE); // пока скрываем
+        rvRates.setVisibility(View.GONE);
 
-        // 4.3) Инициализируем Repository
-        repository = new Repository(this);
+        // 4) Получаем ViewModel через ViewModelProvider
+        viewModel = new ViewModelProvider(this).get(RateViewModel.class);
 
-        // 4.4) Обработчик нажатия кнопки
+        // 5) Подписываемся на LiveData<List<Rate>> из ViewModel
+        //    Заметьте: до вызова fetchRates() liveData может быть null,
+        //    поэтому подписываемся с проверкой null внутри onChanged.
+        viewModel.getRatesLiveData().observe(this, new Observer<List<Rate>>() {
+            @Override
+            public void onChanged(@Nullable List<Rate> rates) {
+                if (rates != null && !rates.isEmpty()) {
+                    rvRates.setVisibility(View.VISIBLE);
+                    tvStatus.setText("Найдено курсов: " + rates.size());
+                    rateAdapter.updateList(rates);
+                } else {
+                    tvStatus.setText("Дані поки відсутні");
+                    rvRates.setVisibility(View.GONE);
+                    Log.i(TAG, "LiveData<List<Rate>> пустий або null");
+                }
+            }
+        });
+
+        // 6) Устанавливаем OnClickListener на кнопку
         btnFetch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String symbolsInput = etSymbols.getText().toString().trim();
                 if (TextUtils.isEmpty(symbolsInput)) {
-                    Toast.makeText(MainActivity.this, "Введите хотя бы одну валюту", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Введіть хоча б одну валюту", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 // Обновляем статус
-                tvStatus.setText("Запрос курсов: " + symbolsInput + "...");
+                tvStatus.setText("Запит курсу: " + symbolsInput + "...");
 
-                // Вызываем репозиторий, который в фоне достанет курс и сохранит его в БД
-                // repository.getRatesForSymbols вернёт LiveData<List<Rate>>
-                repository.getRatesForSymbols(symbolsInput)
-                        .observe(MainActivity.this, new Observer<List<Rate>>() {
-                            @Override
-                            public void onChanged(@Nullable List<Rate> rates) {
-                                if (rates != null && !rates.isEmpty()) {
-                                    // Данные пришли из БД (либо они сохранились, либо уже были)
-                                    rvRates.setVisibility(View.VISIBLE);
-                                    tvStatus.setText("Найдено курсов: " + rates.size());
-                                    rateAdapter.updateList(rates);
-                                } else {
-                                    // Пока нет данных (ещё не успели сохранить или таблица пуста)
-                                    tvStatus.setText("Данные пока отсутствуют");
-                                    rvRates.setVisibility(View.GONE);
-                                    Log.i(TAG, "LiveData с курсами вернул null или пустой список");
-                                }
-                            }
-                        });
+                // Просим ViewModel начать загрузку и сохранение курсу
+                viewModel.fetchRates(symbolsInput);
             }
         });
     }
