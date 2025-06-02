@@ -15,50 +15,23 @@ public class FixerResponse {
     private String base;
 
     @SerializedName("date")
-    private String date; // формат "YYYY-MM-DD"
+    private String date; // "YYYY-MM-DD"
 
     @SerializedName("rates")
     private Map<String, Double> rates;
 
-    // Геттеры и сеттеры
+    public boolean isSuccess() { return success; }
+    public void setSuccess(boolean success) { this.success = success; }
 
-    public boolean isSuccess() {
-        return success;
-    }
+    public long getTimestamp() { return timestamp; }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+    public String getBase() { return base; }
+    public void setBase(String base) { this.base = base; }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getBase() {
-        return base;
-    }
-
-    public void setBase(String base) {
-        this.base = base;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Map<String, Double> getRates() {
-        return rates;
-    }
-
-    public void setRates(Map<String, Double> rates) {
-        this.rates = rates;
-    }
+    public Map<String, Double> getRates() { return rates; }
+    public void setRates(Map<String, Double> rates) { this.rates = rates; }
 }

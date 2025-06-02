@@ -16,45 +16,25 @@ public class Rate {
     private double rateValue;
 
     @NonNull
-    private String date; // "YYYY-MM-DD"
+    private String date;
 
     public Rate(@NonNull String currencyCode, double rateValue, @NonNull String date) {
         this.currencyCode = currencyCode;
-        this.rateValue = rateValue;
-        this.date = date;
+        this.rateValue    = rateValue;
+        this.date         = date;
     }
 
-    // Геттеры и сеттеры
-
-    public int getId() {
-        return id;
-    }
-
+    public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
     @NonNull
-    public String getCurrencyCode() {
-        return currencyCode;
-    }
+    public String getCurrencyCode() { return currencyCode; }
+    public void setCurrencyCode(@NonNull String currencyCode) { this.currencyCode = currencyCode; }
 
-    public void setCurrencyCode(@NonNull String currencyCode) {
-        this.currencyCode = currencyCode;
-    }
-
-    public double getRateValue() {
-        return rateValue;
-    }
-
-    public void setRateValue(double rateValue) {
-        this.rateValue = rateValue;
-    }
+    public double getRateValue() { return rateValue; }
+    public void setRateValue(double rateValue) { this.rateValue = rateValue; }
 
     @NonNull
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(@NonNull String date) {
-        this.date = date;
-    }
+    public String getDate() { return date; }
+    public void setDate(@NonNull String date) { this.date = date; }
 }

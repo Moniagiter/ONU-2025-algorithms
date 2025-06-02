@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 /**
- * Простой RecyclerView.Adapter для отображения списка Rate.
+ * RateAdapter — RecyclerView.Adapter для отображения списка Rate.
  */
 public class RateAdapter extends RecyclerView.Adapter<RateAdapter.RateViewHolder> {
 
@@ -24,7 +24,6 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.RateViewHolder
     @NonNull
     @Override
     public RateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // «Inflate» наш item_rate.xml
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_rate, parent, false);
         return new RateViewHolder(view);
@@ -33,19 +32,23 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.RateViewHolder
     @Override
     public void onBindViewHolder(@NonNull RateViewHolder holder, int position) {
         Rate rate = rateList.get(position);
-        // Формируем строку “USD: 1.1875”
-        String currencyAndValue = rate.getCurrencyCode() + ": " + rate.getRateValue();
-        holder.tvCurrencyValue.setText(currencyAndValue);
-        // Формируем дату “Дата: 2023-08-05”
+        String displayCurrency = rate.getCurrencyCode() + ": " + rate.getRateValue();
+        holder.tvCurrencyValue.setText(displayCurrency);
         holder.tvDate.setText("Дата: " + rate.getDate());
     }
 
     @Override
     public int getItemCount() {
-        return rateList.size();
+        return rateList == null ? 0 : rateList.size();
     }
 
-    // ViewHolder для одного элемента списка
+    /** Позволяет обновить весь список извне и перерисовать RecyclerView */
+    public void updateList(List<Rate> newList) {
+        this.rateList = newList;
+        notifyDataSetChanged();
+    }
+
+    /** ViewHolder для одного элемента списка */
     static class RateViewHolder extends RecyclerView.ViewHolder {
         TextView tvCurrencyValue;
         TextView tvDate;
@@ -53,13 +56,7 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.RateViewHolder
         public RateViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCurrencyValue = itemView.findViewById(R.id.tvCurrencyValue);
-            tvDate = itemView.findViewById(R.id.tvDate);
+            tvDate          = itemView.findViewById(R.id.tvDate);
         }
-    }
-
-    // В случае, если понадобилось обновить список извне
-    public void updateList(List<Rate> newList) {
-        this.rateList = newList;
-        notifyDataSetChanged();
     }
 }
