@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CurrencyExchange DB</string>
+    <string name="rates_list_description">Список курсов валют</string>
 </resources>
